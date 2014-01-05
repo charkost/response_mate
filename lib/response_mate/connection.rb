@@ -31,10 +31,10 @@ class ResponseMate::Connection
   end
 
   def set_headers_from_manifest(manifest)
-    if manifest.try(:[], 'default_headers')
-      manifest['default_headers'].each_pair do |k, v|
-        client.headers[ResponseMate::Helpers.headerize(k)] = v
-      end
+    return if !manifest.default_headers
+
+    manifest.default_headers.each do |k, v|
+      client.headers[ResponseMate::Helpers.headerize(k)] = v
     end
   end
 end
